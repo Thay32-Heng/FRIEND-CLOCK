@@ -12,17 +12,18 @@
   //  optional image URL. That's it!
   // ══════════════════════════════════════════════════════════
   const friends = [
-    { name: "Vochay Somanit", birthday: "2006-11-29" },
+    { name: "Vochay Somanit", birthday: "2006-12-23" },
     { name: "Tann TitPisey", birthday: "2006-08-05" },
-    { name: "Try Thina", birthday: "2006-08-30" },
-    { name: "Doung DaraReaksmey", birthday: "2006-04-12" },
+    { name: "Try Thina", birthday: "2006-08-27" },
+    { name: "Doung DaraReaksmey", birthday: "2006-04-08" },
     { name: "Heng Sengthay", birthday: "2006-04-20" },
     { name: "Sem VotaneakPanha", birthday: "2008-03-10" },
-    { name: "You PhatYuth", birthday: "2006-04-20" },
-    { name: "Yun Dalin", birthday: "2006-04-20" },
-    { name: "Heng Voreakpich", birthday: "2006-04-20" },
-    { name: "Matt Rosavy", birthday: "2006-05-08" },
-    { name: "Hak ChayVann", birthday: "2006-05-08" },
+    { name: "You PhatYuth", birthday: "2006-09-19" },
+    { name: "Yun Dalin", birthday: "2006-03-21" },
+    { name: "Heng Voreakpich", birthday: "2007-08-16" },
+    { name: "Matt Rosavy", birthday: "2006-01-13" },
+    { name: "Hak ChayVann", birthday: "2008-05-08" },
+    { name: "Mean Rotha", birthday: "2003-04-12" },
     // { name: "Alex Johnson",  birthday: "2000-06-15", image: "" },
     // { name: "Sam Lee",       birthday: "1999-12-25", image: "https://example.com/sam.jpg" },
   ];
