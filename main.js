@@ -12,7 +12,7 @@
   //  optional image URL. That's it!
   // ══════════════════════════════════════════════════════════
   const friends = [
-    { name: "Vochay Somanit", birthday: "2006-12-23" },
+    { name: "Vonchay Somanit", birthday: "2006-12-23" },
     { name: "Tann TitPisey", birthday: "2006-08-05" },
     { name: "Try Thina", birthday: "2006-08-27" },
     { name: "Mondul DaraRacksmey", birthday: "2006-04-08" },
@@ -21,7 +21,7 @@
     { name: "You PhatYuth", birthday: "2006-09-19" },
     { name: "Yun Dalin", birthday: "2006-03-21" },
     { name: "Heng Voreakpich", birthday: "2007-08-16" },
-    { name: "Matt Rosavy", birthday: "2006-01-13" },
+    { name: "Mat Rosavy", birthday: "2006-01-13" },
     { name: "Hak ChayVann", birthday: "2008-05-08" },
     { name: "Mean Rotha", birthday: "2003-04-12" },
     // { name: "Alex Johnson",  birthday: "2000-06-15", image: "" },
