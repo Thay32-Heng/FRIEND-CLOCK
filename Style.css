@@ -1,0 +1,207 @@
+/* ========================================
+   Friend-Clock — Style Sheet
+   Dark minimalist theme · CSS Grid layout
+   ======================================== */
+
+/* ---------- Reset & Base ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --clr-bg: #0f0f14;
+  --clr-surface: #1a1a24;
+  --clr-surface-hover: #24243a;
+  --clr-primary: #7c5cfc;
+  --clr-primary-glow: rgba(124, 92, 252, 0.35);
+  --clr-accent: #00e5a0;
+  --clr-text: #e8e8f0;
+  --clr-text-muted: #8888a0;
+  --clr-danger: #ff5c75;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  --font-body: "Poppins", sans-serif;
+  --font-mono: "Orbitron", monospace;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--clr-bg);
+  color: var(--clr-text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ---------- Header ---------- */
+.header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  padding: 2.5rem 1.5rem 2rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.header__title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.header__subtitle {
+  color: var(--clr-text-muted);
+  font-size: 0.95rem;
+  margin: 0.35rem 0 1.4rem;
+}
+
+/* ---------- Container ---------- */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* ---------- Birthday Grid ---------- */
+.birthday-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ---------- Card ---------- */
+.card {
+  background: var(--clr-surface);
+  border-radius: var(--radius);
+  padding: 1.8rem 1.4rem 1.4rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  position: relative;
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+  border-color: var(--clr-primary);
+}
+
+.card__avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--clr-primary);
+  margin-bottom: 0.9rem;
+  box-shadow: 0 0 0 4px var(--clr-primary-glow);
+  transition: var(--transition);
+}
+
+.card:hover .card__avatar {
+  box-shadow: 0 0 0 6px var(--clr-primary-glow);
+}
+
+.card__name {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+
+.card__date {
+  font-size: 0.82rem;
+  color: var(--clr-text-muted);
+  margin-bottom: 1rem;
+}
+
+/* ---------- Countdown Blocks ---------- */
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+.countdown__block {
+  background: #12121c;
+  border-radius: 8px;
+  padding: 0.5rem 0.55rem;
+  min-width: 56px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.countdown__value {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--clr-accent);
+  line-height: 1.2;
+}
+
+.countdown__label {
+  display: block;
+  font-size: 0.62rem;
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+/* Birthday-today glow */
+.card--today {
+  border-color: var(--clr-accent);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.card--today .countdown__value {
+  color: #ffd700;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 12px rgba(0, 229, 160, 0.3);
+  }
+  to {
+    box-shadow: 0 0 28px rgba(0, 229, 160, 0.6);
+  }
+}
+
+/* ---------- Empty State ---------- */
+.empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--clr-text-muted);
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.empty-state.hidden {
+  display: none;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .header__title {
+    font-size: 1.6rem;
+  }
+
+  .birthday-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .countdown__block {
+    min-width: 48px;
+    padding: 0.4rem;
+  }
+
+  .countdown__value {
+    font-size: 1.1rem;
+  }
+}
