@@ -22,7 +22,7 @@
     { name: "Yun Dalin", birthday: "2006-03-21" },
     { name: "Heng Voreakpich", birthday: "2007-08-16" },
     { name: "Mat Rosavy", birthday: "2006-01-13" },
-    { name: "Hak ChayVann", birthday: "2008-05-08" },
+    { name: "Hak ChhayVann", birthday: "2008-05-08" },
     { name: "Mean Rotha", birthday: "2003-04-12" },
     // { name: "Alex Johnson",  birthday: "2000-06-15", image: "" },
     // { name: "Sam Lee",       birthday: "1999-12-25", image: "https://example.com/sam.jpg" },
