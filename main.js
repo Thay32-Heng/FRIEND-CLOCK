@@ -12,11 +12,21 @@
   //  optional image URL. That's it!
   // ══════════════════════════════════════════════════════════
   const friends = [
-    { name: "Vonchay Somanit", birthday: "2006-12-23" },
+    {
+      name: "Vonchay Somanit",
+      birthday: "2006-12-23",
+      src: "images/1.jpg",
+      phone: 855,
+    },
     { name: "Tann TitPisey", birthday: "2006-08-05" },
     { name: "Try Thina", birthday: "2006-08-27" },
     { name: "Mondul DaraRacksmey", birthday: "2006-04-08" },
-    { name: "Heng Sengthay", birthday: "2006-04-20" },
+    {
+      name: "Heng Sengthay",
+      birthday: "2006-03-05",
+      src: "images/4.jpg",
+      phone: "85516767664",
+    },
     { name: "Sem VatanakPanha", birthday: "2008-03-10" },
     { name: "You PhatYuth", birthday: "2006-09-19" },
     { name: "Yun Dalin", birthday: "2006-03-21" },
@@ -47,7 +57,8 @@
     }
 
     const diff = next - now;
-    const isToday = diff < 86400000 && next.getDate() === now.getDate();
+    const isToday =
+      now.getMonth() === bday.getMonth() && now.getDate() === bday.getDate();
 
     const totalSecs = Math.max(0, Math.floor(diff / 1000));
     const days = Math.floor(totalSecs / 86400);
@@ -70,7 +81,7 @@
 
   function buildCardHTML(friend, index) {
     const imgSrc =
-      friend.image || DEFAULT_AVATAR + encodeURIComponent(friend.name);
+      friend.src || DEFAULT_AVATAR + encodeURIComponent(friend.name);
 
     // Get the countdown data
     const countdown = getCountdown(friend.birthday);
@@ -97,9 +108,23 @@
 
     return `
       <div class="card ${isToday ? "card--today" : ""}" data-index="${index}">
-        <img class="card__avatar" src="${imgSrc}" alt="${friend.name}" onerror="this.src='${DEFAULT_AVATAR}${encodeURIComponent(friend.name)}'" />
+        <img class="card__avatar" src="${imgSrc}" alt="${friend.name}" 
+             onerror="this.src='${DEFAULT_AVATAR}${encodeURIComponent(friend.name)}'" />
+        
         <h3 class="card__name">${friend.name}</h3>
         <p class="card__date">${formatDate(friend.birthday)} • <strong>Turning ${nextAge}</strong></p>
+        
+        ${
+          isToday && friend.phone
+            ? `
+  <a href="sms:${friend.phone}?body=Happy%20Birthday%20${encodeURIComponent(friend.name)}!%20🎉" 
+     class="btn-wish">
+     Wish Now📱
+  </a>
+`
+            : ""
+        }
+
         <div class="countdown">
           <div class="countdown__block">
             <span class="countdown__value" data-unit="days">${pad(days)}</span>
