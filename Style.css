@@ -205,3 +205,10 @@ body {
     font-size: 1.1rem;
   }
 }
+
+/* Turing-Age */
+.card__date strong {
+  color: var(--clr-accent);
+  font-weight: 600;
+  margin-left: 4px;
+}
