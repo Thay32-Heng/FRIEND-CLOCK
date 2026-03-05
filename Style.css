@@ -212,3 +212,37 @@ body {
   font-weight: 600;
   margin-left: 4px;
 }
+
+/* Wish Now Button Styling */
+.btn-wish {
+  display: inline-block;
+  margin: 10px 0 15px;
+  padding: 10px 24px;
+  background: #007aff; /* Apple-style blue for Messages */
+  color: #fff;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: var(--transition);
+  animation: pulse 2s infinite;
+}
+
+.btn-wish:hover {
+  transform: translateY(-2px) scale(1.05);
+  filter: brightness(1.1);
+  box-shadow: 0 6px 20px rgba(0, 229, 160, 0.5);
+}
+
+/* Makes the button "breathe" */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
