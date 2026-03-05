@@ -71,13 +71,35 @@
   function buildCardHTML(friend, index) {
     const imgSrc =
       friend.image || DEFAULT_AVATAR + encodeURIComponent(friend.name);
-    const { days, hours, mins, secs, isToday } = getCountdown(friend.birthday);
+
+    // Get the countdown data
+    const countdown = getCountdown(friend.birthday);
+    const { days, hours, mins, secs, isToday } = countdown;
+
+    // --- NEW: Calculate "Turning Age" Logic ---
+    const birthDate = new Date(friend.birthday);
+    const now = new Date();
+    let nextYear = now.getFullYear();
+
+    // Determine if the next birthday is this year or next year
+    const nextBdayDate = new Date(
+      now.getFullYear(),
+      birthDate.getMonth(),
+      birthDate.getDate(),
+    );
+    if (now > nextBdayDate) {
+      nextYear = now.getFullYear() + 1;
+    }
+
+    // The age they will be on that next birthday
+    const nextAge = nextYear - birthDate.getFullYear();
+    // ------------------------------------------
 
     return `
       <div class="card ${isToday ? "card--today" : ""}" data-index="${index}">
         <img class="card__avatar" src="${imgSrc}" alt="${friend.name}" onerror="this.src='${DEFAULT_AVATAR}${encodeURIComponent(friend.name)}'" />
         <h3 class="card__name">${friend.name}</h3>
-        <p class="card__date">${formatDate(friend.birthday)}</p>
+        <p class="card__date">${formatDate(friend.birthday)} • <strong>Turning ${nextAge}</strong></p>
         <div class="countdown">
           <div class="countdown__block">
             <span class="countdown__value" data-unit="days">${pad(days)}</span>
