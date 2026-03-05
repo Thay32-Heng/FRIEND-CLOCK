@@ -8,8 +8,18 @@
       src: "images/1.jpg",
       phone: "85512345678",
     },
-    { name: "Tann TitPisey", birthday: "2006-08-05", phone: "855884360855" },
-    { name: "Try Thina", birthday: "2006-08-27", phone: "855966567427" },
+    {
+      name: "Tann TitPisey",
+      birthday: "2006-08-05",
+      src: "",
+      phone: "855884360855",
+    },
+    {
+      name: "Try Thina",
+      birthday: "2006-08-27",
+      src: "",
+      phone: "855966567427",
+    },
     {
       name: "Mondul DaraRacksmey",
       birthday: "2006-04-08",
@@ -67,105 +77,82 @@
     };
   }
 
-  function getZodiacVibe(dateStr) {
-    const d = new Date(dateStr);
-    const day = d.getDate();
-    const month = d.getMonth() + 1;
-    let zodiac = "";
-    let vibeClass = "";
-
-    if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) {
-      zodiac = "♈ Aries";
-      vibeClass = "vibe-fire";
-    } else if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) {
-      zodiac = "♉ Taurus";
-      vibeClass = "vibe-earth";
-    } else if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) {
-      zodiac = "♊ Gemini";
-      vibeClass = "vibe-air";
-    } else if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) {
-      zodiac = "♋ Cancer";
-      vibeClass = "vibe-water";
-    } else if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) {
-      zodiac = "♌ Leo";
-      vibeClass = "vibe-fire";
-    } else if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) {
-      zodiac = "♍ Virgo";
-      vibeClass = "vibe-earth";
-    } else if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) {
-      zodiac = "♎ Libra";
-      vibeClass = "vibe-air";
-    } else if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) {
-      zodiac = "♏ Scorpio";
-      vibeClass = "vibe-water";
-    } else if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) {
-      zodiac = "♐ Sagittarius";
-      vibeClass = "vibe-fire";
-    } else if ((month == 12 && day >= 22) || (month == 1 && day <= 19)) {
-      zodiac = "♑ Capricorn";
-      vibeClass = "vibe-earth";
-    } else if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) {
-      zodiac = "♒ Aquarius";
-      vibeClass = "vibe-air";
-    } else {
-      zodiac = "♓ Pisces";
-      vibeClass = "vibe-water";
-    }
-    return { zodiac, vibeClass };
+  function pad(n) {
+    return String(n).padStart(2, "0");
   }
 
+  // --- Feature: Stats Logic ---
   function updateFriendshipStats() {
     const statsContainer = document.getElementById("friendship-stats");
     if (!friends.length || !statsContainer) return;
-    const now = new Date();
-    const partyingToday = friends.filter(
+
+    // 1. Find who is partying TODAY
+    const partyNowList = friends.filter(
       (f) => getCountdown(f.birthday).isToday,
     );
-    const partyNames = partyingToday.length
-      ? partyingToday.map((f) => f.name).join(", ")
+    const partyNowNames = partyNowList.length
+      ? partyNowList.map((f) => f.name).join(", ")
       : "No one today 😴";
 
     // 2. Find who is NEXT (Filtering out today's people)
     const futureFriends = friends.filter(
       (f) => !getCountdown(f.birthday).isToday,
     );
-    const sortedByNext = [...futureFriends].sort(
-      (a, b) => getCountdown(a.birthday).days - getCountdown(b.birthday).days,
-    );
-    const nextUp = sortedByNext[0];
 
+    const sortedByNext = [...futureFriends].sort((a, b) => {
+      return getCountdown(a.birthday).days - getCountdown(b.birthday).days;
+    });
+
+    const nextPerson = sortedByNext[0];
+    const nextPartyInfo = nextPerson
+      ? `${nextPerson.name} (${getCountdown(nextPerson.birthday).days}d left)`
+      : "None scheduled";
+
+    // 3. Inject the Dual Stats
     statsContainer.innerHTML = `
-      <div class="stats-grid">
-        <div class="stat-item"><span class="stat-label">🔥 Party Now</span><span class="stat-value pulse">${partyNames}</span></div>
-        <div class="stat-item"><span class="stat-label">📅 Next Party</span><span class="stat-value" style="color:#009ce5">${nextUp ? nextUp.name : "N/A"}</span></div>
-        <div class="stat-item"><span class="stat-label">👥 Squad Size</span><span class="stat-value">${friends.length} Friends</span></div>
-      </div>`;
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-label">🔥 Party Now</span>
+        <span class="stat-value" style="color: #5cff61;">${partyNowNames}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">📅 Next Party</span>
+        <span class="stat-value" style="color: #009ce5;">${nextPartyInfo}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">👥 Squad Size</span>
+        <span class="stat-value">${friends.length} Friends</span>
+      </div>
+    </div>
+  `;
   }
-
+  // --- Render Logic ---
   function buildCardHTML(friend, index) {
-    const c = getCountdown(friend.birthday);
-    const bDate = new Date(friend.birthday);
-    const { zodiac, vibeClass } = getZodiacVibe(friend.birthday);
-    const nextAge =
-      (new Date() >
-      new Date(new Date().getFullYear(), bDate.getMonth(), bDate.getDate())
-        ? new Date().getFullYear() + 1
-        : new Date().getFullYear()) - bDate.getFullYear();
+    const countdown = getCountdown(friend.birthday);
+    const birthDate = new Date(friend.birthday);
+    const now = new Date();
+    let nextYear = now.getFullYear();
+    if (
+      now >
+      new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate())
+    )
+      nextYear++;
+
+    const nextAge = nextYear - birthDate.getFullYear();
     const imgSrc =
       friend.src || DEFAULT_AVATAR + encodeURIComponent(friend.name);
 
     return `
-      <div class="card ${c.isToday ? "card--today" : ""}" data-index="${index}">
-        <div class="zodiac-badge ${vibeClass}">${zodiac}</div>
+      <div class="card ${countdown.isToday ? "card--today" : ""}" data-index="${index}">
         <img class="card__avatar" src="${imgSrc}" onerror="this.src='${DEFAULT_AVATAR}${encodeURIComponent(friend.name)}'">
         <h3 class="card__name">${friend.name}</h3>
-        <p class="card__date">${bDate.toLocaleDateString("en-US", { month: "long", day: "numeric" })} • <strong>Turning ${nextAge}</strong></p>
-        ${c.isToday && friend.phone ? `<a href="sms:${friend.phone}?body=Happy Birthday!" class="btn-wish">Wish Now📱</a>` : ""}
+        <p class="card__date">${birthDate.toLocaleDateString("en-US", { month: "long", day: "numeric" })} • <strong>Turning ${nextAge}</strong></p>
+        ${countdown.isToday && friend.phone ? `<a href="sms:${friend.phone}?body=Happy Birthday!" class="btn-wish">Wish Now📱</a>` : ""}
         <div class="countdown">
-          <div class="countdown__block"><span class="countdown__value" data-unit="days">${String(c.days).padStart(2, "0")}</span><span class="countdown__label">Days</span></div>
-          <div class="countdown__block"><span class="countdown__value" data-unit="hours">${String(c.hours).padStart(2, "0")}</span><span class="countdown__label">Hrs</span></div>
-          <div class="countdown__block"><span class="countdown__value" data-unit="mins">${String(c.mins).padStart(2, "0")}</span><span class="countdown__label">Min</span></div>
-          <div class="countdown__block"><span class="countdown__value" data-unit="secs">${String(c.secs).padStart(2, "0")}</span><span class="countdown__label">Sec</span></div>
+          <div class="countdown__block"><span class="countdown__value" data-unit="days">${pad(countdown.days)}</span><span class="countdown__label">Days</span></div>
+          <div class="countdown__block"><span class="countdown__value" data-unit="hours">${pad(countdown.hours)}</span><span class="countdown__label">Hrs</span></div>
+          <div class="countdown__block"><span class="countdown__value" data-unit="mins">${pad(countdown.mins)}</span><span class="countdown__label">Min</span></div>
+          <div class="countdown__block"><span class="countdown__value" data-unit="secs">${pad(countdown.secs)}</span><span class="countdown__label">Sec</span></div>
         </div>
       </div>`;
   }
@@ -184,18 +171,10 @@
       const card = grid.querySelector(`.card[data-index="${index}"]`);
       if (!card) return;
       const c = getCountdown(friend.birthday);
-      card.querySelector('[data-unit="days"]').textContent = String(
-        c.days,
-      ).padStart(2, "0");
-      card.querySelector('[data-unit="hours"]').textContent = String(
-        c.hours,
-      ).padStart(2, "0");
-      card.querySelector('[data-unit="mins"]').textContent = String(
-        c.mins,
-      ).padStart(2, "0");
-      card.querySelector('[data-unit="secs"]').textContent = String(
-        c.secs,
-      ).padStart(2, "0");
+      card.querySelector('[data-unit="days"]').textContent = pad(c.days);
+      card.querySelector('[data-unit="hours"]').textContent = pad(c.hours);
+      card.querySelector('[data-unit="mins"]').textContent = pad(c.mins);
+      card.querySelector('[data-unit="secs"]').textContent = pad(c.secs);
     });
   }
 
