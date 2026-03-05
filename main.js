@@ -23,7 +23,7 @@
     { name: "Mondul DaraRacksmey", birthday: "2006-04-08" },
     {
       name: "Heng Sengthay",
-      birthday: "2006-03-05",
+      birthday: "2006-04-20",
       src: "images/4.jpg",
       phone: "85516767664",
     },
