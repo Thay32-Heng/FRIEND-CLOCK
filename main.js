@@ -132,6 +132,18 @@
 
     grid.innerHTML = friends.map((f, i) => buildCardHTML(f, i)).join("");
     emptyState.classList.toggle("hidden", friends.length > 0);
+
+    // --- NEW: Confetti Trigger ---
+    // If ANY friend has a birthday today, launch the confetti!
+    const birthdayToday = friends.some((f) => getCountdown(f.birthday).isToday);
+    if (birthdayToday) {
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ["#7c5cfc", "#00e5a0", "#ff5c75"], // Using your theme colors
+      });
+    }
   }
 
   // ─── Live tick ──────────────────────────────────────────

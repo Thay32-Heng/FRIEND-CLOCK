@@ -11,9 +11,9 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@500;700&display=swap"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   </head>
   <body>
-    <!-- ========== HEADER ========== -->
     <header class="header">
       <div class="header__inner">
         <h1 class="header__title">&#128368; Friend-Clock</h1>
@@ -21,11 +21,8 @@
       </div>
     </header>
 
-    <!-- ========== MAIN GRID ========== -->
     <main class="container">
-      <div id="birthday-grid" class="birthday-grid">
-        <!-- Cards injected by JS -->
-      </div>
+      <div id="birthday-grid" class="birthday-grid"></div>
       <p class="empty-state" id="empty-state">
         No friends added yet.<br />Add friends in <strong>main.js</strong> to
         get started!
