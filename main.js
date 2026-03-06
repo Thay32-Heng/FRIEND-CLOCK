@@ -22,7 +22,12 @@
       src: "images/4.jpg",
       phone: "85516767664",
     },
-    { name: "Sem VatanakPanha", birthday: "2008-03-10" },
+    {
+      name: "Sem VatanakPanha",
+      birthday: "2008-03-10",
+      phone: "855965826116",
+      src: "images/5.jpg",
+    },
     { name: "You PhatYuth", birthday: "2006-09-19" },
     { name: "Yun Dalin", birthday: "2006-03-21" },
     { name: "Heng Voreakpich", birthday: "2007-08-16" },
@@ -34,11 +39,7 @@
   const DEFAULT_AVATAR =
     "https://ui-avatars.com/api/?background=7c5cfc&color=fff&bold=true&size=200&name=";
   const grid = document.getElementById("birthday-grid");
-  const emptyState = document.getElementById("empty-state");
   const statsContainer = document.getElementById("friendship-stats");
-  // Filter out people whose birthday is TODAY if you want to see who is NEXT
-  const onlyFuture = friends.filter((f) => !getCountdown(f.birthday).isToday);
-  // Then sort onlyFuture instead of friends...
 
   // --- Logic Helpers ---
   function getCountdown(birthdayStr) {
@@ -115,9 +116,7 @@
   }
 
   function updateFriendshipStats() {
-    const statsContainer = document.getElementById("friendship-stats");
     if (!friends.length || !statsContainer) return;
-    const now = new Date();
     const partyingToday = friends.filter(
       (f) => getCountdown(f.birthday).isToday,
     );
@@ -125,7 +124,6 @@
       ? partyingToday.map((f) => f.name).join(", ")
       : "No one today 😴";
 
-    // 2. Find who is NEXT (Filtering out today's people)
     const futureFriends = friends.filter(
       (f) => !getCountdown(f.birthday).isToday,
     );
@@ -148,7 +146,8 @@
     const { zodiac, vibeClass } = getZodiacVibe(friend.birthday);
     const nextAge =
       (new Date() >
-      new Date(new Date().getFullYear(), bDate.getMonth(), bDate.getDate())
+        new Date(new Date().getFullYear(), bDate.getMonth(), bDate.getDate()) &&
+      !c.isToday
         ? new Date().getFullYear() + 1
         : new Date().getFullYear()) - bDate.getFullYear();
     const imgSrc =
@@ -173,7 +172,6 @@
   function renderAll() {
     grid.innerHTML = friends.map((f, i) => buildCardHTML(f, i)).join("");
     updateFriendshipStats();
-
     if (friends.some((f) => getCountdown(f.birthday).isToday)) {
       confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
     }
@@ -199,7 +197,50 @@
     });
   }
 
+  // --- Task 1 & 2: Instant 24h Celebration Engine ---
+  function handleCelebration() {
+    const stage = document.getElementById("birthday-stage");
+    const audio = document.getElementById("bday-audio");
+    const nameEl = document.getElementById("stage-name");
+    const imgEl = document.getElementById("stage-img");
+
+    // Who is partying today? (March 6, 2026)
+    const birthdayPerson = friends.find((f) => {
+      const bday = new Date(f.birthday);
+      const now = new Date();
+      return (
+        bday.getMonth() === now.getMonth() && bday.getDate() === now.getDate()
+      );
+    });
+
+    if (birthdayPerson) {
+      // 1. EXECUTE: Show Dashboard
+      stage.classList.remove("hidden");
+      if (nameEl) nameEl.textContent = birthdayPerson.name;
+      if (imgEl)
+        imgEl.src =
+          birthdayPerson.src ||
+          DEFAULT_AVATAR + encodeURIComponent(birthdayPerson.name);
+
+      // 2. DJ Logic: Start looping music on FIRST interaction anywhere
+      const startMusic = () => {
+        audio.loop = true;
+        audio
+          .play()
+          .catch(() => console.log("Waiting for user interaction..."));
+        document.body.removeEventListener("click", startMusic);
+      };
+      document.body.addEventListener("click", startMusic);
+    } else {
+      // 3. STOP: If no birthday, clean up and hide everything
+      stage.classList.add("hidden");
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  }
+
   // ─── Init ───────────────────────────────────────────────
   renderAll();
+  handleCelebration();
   setInterval(tick, 1000);
 })();

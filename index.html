@@ -14,6 +14,25 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   </head>
   <body>
+    <div id="birthday-stage" class="birthday-stage hidden">
+      <div class="stage-overlay">
+        <div class="stage-content">
+          <img id="stage-img" src="" alt="" class="stage-img" />
+          <h1 class="stage-text">
+            Happy Birthday, <span id="stage-name"></span>! 🎉
+          </h1>
+          <p class="stage-subtext">The celebration continues all day long!</p>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <audio id="bday-audio" loop>
+      <source
+        src="audio/saavane-happy-birthday-254480.mp3"
+        type="audio/mpeg"
+      />
+    </audio>
     <header class="header">
       <div class="header__inner">
         <h1 class="header__title">&#128368; Friend-Clock</h1>
@@ -23,10 +42,7 @@
 
     <main class="container">
       <div id="birthday-grid" class="birthday-grid"></div>
-      <p class="empty-state" id="empty-state">
-        No friends added yet.<br />Add friends in <strong>main.js</strong> to
-        get started!
-      </p>
+      <p class="empty-state" id="empty-state"></p>
     </main>
 
     <footer class="footer">
