@@ -375,7 +375,7 @@ body {
 
 /* Earth Vibes (Taurus, Virgo, Cap) */
 .vibe-earth {
-  background: linear-gradient(45deg, #11998e, #38ef7d);
+  background: linear-gradient(45deg, #998b11, #38ef7d);
   color: white;
   box-shadow: 0 0 10px rgba(17, 153, 142, 0.4);
 }
