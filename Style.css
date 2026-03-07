@@ -449,3 +449,69 @@ body {
     opacity: 1;
   }
 }
+
+/* Birthday Dashboard Stage */
+.birthday-stage {
+  background: linear-gradient(135deg, #1a1a2e 0%, #7c5cfc 100%);
+  padding: 4rem 1rem;
+  text-align: center;
+  border-bottom: 3px solid var(--clr-accent);
+}
+
+.stage-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+  margin-bottom: 1.5rem;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+.stage-text {
+  font-size: 2.8rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.stage-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn-music,
+.btn-hotpot {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 30px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.btn-music {
+  background: var(--clr-accent);
+  color: #000;
+}
+.btn-hotpot {
+  background: #ff5c75;
+  color: #fff;
+}
+
+.btn-music:hover,
+.btn-hotpot:hover {
+  transform: scale(1.05);
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}

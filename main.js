@@ -24,7 +24,7 @@
     },
     {
       name: "Sem VatanakPanha",
-      birthday: "2008-03-10",
+      birthday: "2008-03-07",
       phone: "855965826116",
       src: "images/5.jpg",
     },
@@ -198,11 +198,15 @@
   }
 
   // --- Task 1 & 2: Instant 24h Celebration Engine ---
+  // --- Updated Task 1 & 2: Instant 24h Celebration Engine ---
   function handleCelebration() {
     const stage = document.getElementById("birthday-stage");
     const audio = document.getElementById("bday-audio");
     const nameEl = document.getElementById("stage-name");
     const imgEl = document.getElementById("stage-img");
+    // ADD THESE REFS
+    const btnMusic = document.getElementById("btn-play-music");
+    const btnHotpot = document.getElementById("btn-hotpot");
 
     // Who is partying today? (March 6, 2026)
     const birthdayPerson = friends.find((f) => {
@@ -222,7 +226,25 @@
           birthdayPerson.src ||
           DEFAULT_AVATAR + encodeURIComponent(birthdayPerson.name);
 
-      // 2. DJ Logic: Start looping music on FIRST interaction anywhere
+      // --- ADDED DJ LOGIC: Music Toggle ---
+      if (btnMusic) {
+        btnMusic.onclick = () => {
+          audio.loop = true; // Loop continuously as requested
+          audio.play();
+          btnMusic.textContent = "🎶 Music Looping...";
+          btnMusic.disabled = true;
+        };
+      }
+
+      // --- ADDED HOTPOT PROTOCOL: Telegram Invitation ---
+      if (btnHotpot) {
+        btnHotpot.onclick = () => {
+          const message = `Happy Birthday to you, ${birthdayPerson.name}! 🎂 Let's all go eat hotpot together, Afternoon! 🍲`;
+          const telegramLink = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(message)}`;
+          window.open(telegramLink, "_blank"); // Direct to Telegram
+        };
+      }
+
       const startMusic = () => {
         audio.loop = true;
         audio
