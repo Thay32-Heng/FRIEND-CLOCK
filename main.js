@@ -4,7 +4,7 @@
   const friends = [
     {
       name: "Vonchay Somanit",
-      birthday: "2006-12-23",
+      birthday: "2006-11-23",
       src: "images/1.jpg",
       phone: "85512345678",
     },
